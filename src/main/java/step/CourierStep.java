@@ -8,6 +8,7 @@ import io.restassured.response.ValidatableResponse;
 
 public class CourierStep {
     private static final Gson gson = new Gson();
+    private static final String API_ENDPOINT = "/api/v1/courier";
 
     @Step("Create courier")
     public ValidatableResponse createCourier(Courier courier) {
@@ -15,7 +16,7 @@ public class CourierStep {
                 .header("Content-type", "application/json")
                 .body(gson.toJson(courier))
                 .when()
-                .post("/api/v1/courier")
+                .post(API_ENDPOINT)
                 .then();
     }
 
@@ -25,7 +26,7 @@ public class CourierStep {
                 .header("Content-type", "application/json")
                 .body(gson.toJson(new Courier(login, password)))
                 .when()
-                .post("/api/v1/courier/login")
+                .post(API_ENDPOINT + "/login")
                 .then()
                 .extract()
                 .path("id")
@@ -38,7 +39,7 @@ public class CourierStep {
                 .header("Content-type", "application/json")
                 .pathParam("id", id)
                 .when()
-                .delete("/api/v1/courier/{id}")
+                .delete(API_ENDPOINT + "/{id}")
                 .then();
     }
 }
